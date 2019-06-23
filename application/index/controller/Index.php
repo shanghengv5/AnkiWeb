@@ -7,10 +7,14 @@ class Index extends Controller
     {
         return 'hello, X-tie!';
     }
-    public function hello()
+    
+    public function hello($name = 'thinkphp')
     {
-        $name = "Hello, X-tie";
-        $this->assign('name', $name);
-        return $this.fetch();
+    $this->assign('name', $name);
+    return $this->fetch();
+    }
+
+    public function say() {
+        return 'hello0';
     }
 }
