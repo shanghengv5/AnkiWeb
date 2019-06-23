@@ -1,10 +1,16 @@
 <?php
 namespace app\index\controller;
-
-class Index
+use think\Controller;
+class Index extends Controller
 {
     public function index()
     {
-        return "Hello, X-tie";
+        return 'hello, X-tie!';
+    }
+    public function hello()
+    {
+        $name = "Hello, X-tie";
+        $this->assign('name', $name);
+        return $this.fetch();
     }
 }
