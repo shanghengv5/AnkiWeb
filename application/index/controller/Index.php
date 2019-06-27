@@ -8,13 +8,4 @@ class Index extends Controller
         return 'hello, X-tie!';
     }
     
-    public function hello($name = 'thinkphp')
-    {
-    $this->assign('name', $name);
-    return $this->fetch();
-    }
-
-    public function say() {
-        return 'hello0';
-    }
 }
