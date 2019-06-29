@@ -54,15 +54,15 @@ return [
     // +----------------------------------------------------------------------
 
     // 默认模块名
-    'default_module'         => 'index',
+    'default_module'         => 'user',
     // 禁止访问模块
     'deny_module_list'       => ['common'],
     // 默认控制器名
-    'default_controller'     => 'Index',
+    'default_controller'     => 'user',
     // 默认操作名
     'default_action'         => 'index',
     // 默认验证器
-    'default_validate'       => '',
+    'default_validate'       => 'validate',
     // 默认的空控制器名
     'empty_controller'       => 'Error',
     // 操作方法后缀
@@ -81,7 +81,7 @@ return [
     // pathinfo分隔符
     'pathinfo_depr'          => '/',
     // URL伪静态后缀
-    'url_html_suffix'        => 'html',
+    'url_html_suffix'        => '',
     // URL普通方式参数 用于自动生成
     'url_common_param'       => false,
     // URL参数方式 0 按名称成对解析 1 按顺序解析
@@ -207,7 +207,7 @@ return [
         // SESSION_ID的提交变量,解决flash上传跨域
         'var_session_id' => '',
         // SESSION 前缀
-        'prefix'         => 'think',
+        'prefix'         => 'module',
         // 驱动方式 支持redis memcache memcached
         'type'           => '',
         // 是否自动开启 SESSION

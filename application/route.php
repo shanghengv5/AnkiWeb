@@ -13,6 +13,10 @@ return [
     '__pattern__' => [
         'name' => '\w+',
     ],
-    'register' => 'user/user/registerForm',
-
+    'register' => 'user/user/register',
+    'login' => 'user/user/login',
+    'logout' => 'user/user/logout',
+    'test' => 'user/user/test',
+    'addsubject' => 'user/user/addSubject',
+    
 ];

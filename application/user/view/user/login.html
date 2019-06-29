@@ -1,0 +1,19 @@
+{include file="/template/header" title="登录界面"}
+<form method="POST" action="{:url('/index/login')}"
+<div class="row">
+    <div class="col"></div>
+    <div class="col">
+        <div class="form-group">
+            <label for="username">名称</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="请输入用户名">
+            <label for="password">密码</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="请输入用户密码">
+            <input type="submit" class="form-control" value="登录">
+        </div>
+    </div>
+    <div class="col"></div>
+
+</div>
+
+</form>
+{include file="/template/footer"}

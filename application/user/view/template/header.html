@@ -7,3 +7,17 @@
         <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     </head>
     <body>
+        <div class="container">
+            <p>欢迎来到铁匠铺</p>
+                <ul class="nav nav-pills row">
+                <li class="nav-item col"><a class='nav-link active text-center' href="{:url('/index/addsubject')}">添加类别</a></li>
+                <li class="nav-item col"><a class="nav-link active text-center" href="#">設置</a></li>
+                <?php if(session('valid_user', '', 'user')){
+                        echo "<li class='nav-item col'> <a class='nav-link active text-center' href='". url('/index/logout')."'>登出</a></li> ";
+                }
+                ?>
+            </ul>
+        
+            </div>
+            
+        
