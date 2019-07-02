@@ -18,5 +18,9 @@ return [
     'logout' => 'user/user/logout',
     'test' => 'user/user/test',
     'addsubject' => 'user/user/addSubject',
+    'subject' => 'user/user/subject',
+    'delSubject' => 'user/user/delSubject',
+    'addCourse' => 'user/user/addCourse',
+    'viewCourse' => 'user/user/viewCourse',
     
 ];

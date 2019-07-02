@@ -1,0 +1,23 @@
+{include file="/template/header" title="小铁匠|增加你的课程"}
+<form method="post" action="<:url('/index/addCourse')>">
+    <div class="row">
+    <div class="col"></div>
+    <div class="col">
+        <div class="form-group">
+            <label for="name">知识点</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="一个学习的知识点">
+            <label for="content">答案</label>
+            <textarea rows="10" columns="30" class="form-control" id="content" name="content" placeholder="请输入有关知识点的解释或者说明"></textarea>
+            <label for="subject_id">科目</label>
+            <select name="subject_id" class="custom-select" id="subject_id">
+                {volist name="subjectlist" id="sub"}
+                <option value="<$sub.subject_id>"><$sub.name></option>
+                {/volist}
+            </select>
+            <input type="submit" class="form-control" value="提交">
+        </div>
+    </div>
+    <div class="col"></div>
+</div>
+</form>    
+{include file="/template/footer"}

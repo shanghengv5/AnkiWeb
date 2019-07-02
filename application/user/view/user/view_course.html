@@ -1,0 +1,31 @@
+{include file="/template/header" title="小铁匠|增加你的课程"}
+<hr />
+<div class="navbar bg-light">
+    <ul class="nav nav-tabs">
+    {volist name="subjectlist" id="sub"}
+        <li class="nav-item ">
+            <a class="nav-link active" data-toggle="tab" href="#<$sub.subject_id> "> <$sub.name> </a>
+        </li> 
+    {/volist}      
+    </ul>
+    <script>
+        function sub() {
+            submit();
+        }
+        function pageload() {
+            setTimeout(sub, 1);
+        }
+        
+    </script>
+    {volist name="subjectlist" id="sub"}
+    <div class="tab-content" onload=pageload()>
+        <div id="<$sub.subject_id>" class="container tab-pane active"><br>
+            <form action="<:url('index/course')>" method="POST">
+                <input type="hidden" name="subject_id" value="<$sub.subject_id>">
+            </form>
+        </div>
+    </div>
+    {/volist}
+</div>
+
+{include file="/template/footer" }

@@ -1,0 +1,11 @@
+{include file="/template/header" title="小铁匠|科目"}
+
+<ul class="list-group">
+    {volist name="list" id="subname"}
+    <li class="list-group-item "><a class="text-center" href="#"><$subname.name></a> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#<$subname.subject_id>">删除</button> </li>
+    {include file="/template/model" modalname="<$subname.subject_id>" title="是否删除该科目" content="你正在删除一个科目" method="post" url="<:url('/index/delSubject')>" value="<$subname.subject_id>" name="subject_id" action="删除"}
+    {/volist}
+    
+</ul>
+
+{include file="/template/footer"}

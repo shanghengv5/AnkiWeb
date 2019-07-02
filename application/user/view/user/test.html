@@ -1,0 +1,10 @@
+{include file="/template/header" title="登录界面"}
+<!-- 按钮：用于打开模态框 -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        打开模态框
+      </button>
+       
+      {include file="/template/model" title="是否删除该科目" content="你正在删除一个科目" method="post" url="#" value="#" name="id" action="删除"}
+   
+
+{include file="/template/footer"}
