@@ -21,9 +21,7 @@ return [
     'test' => 'user/user/test',
     'addsubject' => 'user/user/addSubject',
     'subject' => 'user/user/subject',
-    'updateSubject' => 'user/user/updateSubject',
-    'delSubject' => 'user/user/delSubject',
     'addCourse' => 'user/user/addCourse',
     'viewCourse/[:sub_id, :course_id]' => 'user/user/viewCourse',
-    'updateCourse' => 'user/user/updateCourse',
+    
 ];
