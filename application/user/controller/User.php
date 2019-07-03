@@ -165,7 +165,7 @@ class User extends Controller
         }
     }
     //更新科目
-    public function updateSubject()
+    private function updateSubject()
     {
         //从表单得到id并且传入模型
         $id = input('subject_id');
@@ -181,6 +181,12 @@ class User extends Controller
     //展示已經有的科目
     public function subject()
     {
+        if('delete' == input('anchor')) {
+            $this->delSubject();
+        }
+        if('rename' == input('anchor')) {
+            $this->updateSubject();
+        }
         //得到subject表中的所有数据然后传入视图中.
         if(($username = $this->isLogin())){
             $list = $this->getSubjectList($username);
@@ -197,7 +203,7 @@ class User extends Controller
         }
     }
     //删除已有的科目
-    public function delSubject() 
+    private function delSubject() 
     {
         //从表单得到id并且传入模型
         $id = input('subject_id');
@@ -210,12 +216,8 @@ class User extends Controller
             if($course) {
                 $course->delete();
             }
-            $list = $this->getSubjectList(session('valid_user'));
-            return view('subject', ['list'=>$list]);
         } else {
             echo "错误,无法删除";
-            $list = $this->getSubjectList(session('valid_user'));
-            return view('subject', ['list'=>$list]);
         }
     }
     //通过用户名获取科目列表
