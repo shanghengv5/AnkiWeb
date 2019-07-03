@@ -1,11 +1,21 @@
 {include file="/template/header" title="小铁匠|科目"}
 
-<ul class="list-group">
+<ul class="list-group row">
     {volist name="list" id="subname"}
-    <li class="list-group-item "><a class="text-center" href="#"><$subname.name></a> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#<$subname.subject_id>">删除</button> </li>
-    {include file="/template/model" modalname="<$subname.subject_id>" title="是否删除该科目" content="你正在删除一个科目" method="post" url="<:url('/index/delSubject')>" value="<$subname.subject_id>" name="subject_id" action="删除"}
-    {/volist}
+    <li class="list-group-item  text-center col-2">
+    <a class="text-center" href="#"><$subname.name></a> 
+    </li>
+    <div class="col-5">
+    {include file="/template/modal"  title="是否重命名该科目" content="<h4>科目名:</h4> <input type='text' name='name'>" method="post" 
+    url="<:url('/index/updateSubject')>" value="<$subname.subject_id>" name="subject_id" action="重命名"
+    target="<$subname.subject_id>"}   
+
+    {include file="/template/modal"  title="是否删除该科目" content="你正在删除一个科目" method="post" 
+    url="<:url('/index/delSubject')>" value="<$subname.subject_id>" name="subject_id" action="删除"
+    target="<$subname.subject_id>" }
+    </div>
     
+    {/volist}
 </ul>
 
 {include file="/template/footer"}

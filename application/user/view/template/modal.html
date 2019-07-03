@@ -1,6 +1,8 @@
-
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#[target]">[action]</button> 
 <!-- 模态框-->
-<div class="modal fade" id="[modalname]">
+
+<div class="modal fade" id="[target]">
+    <form method="[method]" action="[url]">
     <div class="modal-dialog">
         <div class="modal-content">
             <!--模态框头部-->
@@ -14,12 +16,12 @@
             </div>
             <!--模态框底部-->
             <div class="modal-footer">
-                <form method="[method]" action="[url]">
                     <input type="hidden" value="[value]" name="[name]">
                     <input type="submit" class="btn btn-warning" value="[action]">
-                </form>    
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <input type="hidden" value="[anchor]" name="anchor">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
             </div>
         </div>
     </div>
+    </form>
 </div>

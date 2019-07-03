@@ -164,6 +164,20 @@ class User extends Controller
             return view('login');
         }
     }
+    //更新科目
+    public function updateSubject()
+    {
+        //从表单得到id并且传入模型
+        $id = input('subject_id');
+        $sub = SubjectModel::get($id);
+        if($sub) {
+            $sub->name = input('name');
+            $sub->save();
+            echo "更新成功";
+        } else {
+            echo "更新失败";
+        }
+    }
     //展示已經有的科目
     public function subject()
     {
@@ -188,10 +202,14 @@ class User extends Controller
         //从表单得到id并且传入模型
         $id = input('subject_id');
         $sub = SubjectModel::get($id);
+        $course = CourseModel::getBySubjectId($id);
         //如果id存在,则删除
         if($sub) {
             $sub->delete();
             echo "删除成功";
+            if($course) {
+                $course->delete();
+            }
             $list = $this->getSubjectList(session('valid_user'));
             return view('subject', ['list'=>$list]);
         } else {
@@ -253,31 +271,84 @@ class User extends Controller
         }
     }
     //得到course的list
-    private function getCourseList($value) {
+    private function getCourseList($value)
+     {
         $course = new CourseModel;
         $list = $course->where('subject_id', $value)->select();
         return $list;
     }
-
-    //浏览知识点,需要显示科目与知识点的关系
-    public function viewCourse()
+    //通过course_id得到course的相关数据
+    private function getCourse($id) 
     {
+        $res = CourseModel::get($id);
+        return $res;
+    }
+    //浏览知识点,需要显示科目与知识点的关系
+    public function viewCourse($sub_id='', $course_id='')
+    {
+        if('update' == input('anchor')) {
+            $this->updateCourse();
+        }
+        if('delete' == input('anchor')) {
+            $this->delCourse();
+        }
+        //判断用户是否已经登录.
         if(($username=$this->isLogin())){
+            //得到该用户的科目列表;
             $subjectlist = $this->getSubjectList($username);
+            //如果没有科目,需要先创建科目
+            if(!$subjectlist) {
+                echo "你还没有科目, 请先创建";
+                return view('add_subject');
+            }
+            //如果没有传入sub_id,则默认显示排名排名靠前的科目
+            if(!input('sub_id')) {
+                $sub_id = $subjectlist[0]['subject_id'];
+            }
+            $list =$this->getCourseList($sub_id);
             $this->assign('subjectlist', $subjectlist);
+            //如果没有知识点,需要先创建知识点. 
+            if(!$list) {
+                echo "没有知识点";
+                return view('add_course');
+            } 
+            //得到相应的course
+            $course = $this->getCourse($course_id);
+            //如果没有传入sub_id,默认为显示排序靠前的知识点
+            if(!$course_id) {
+                $course = $list[0];
+            }
+            //传递变量到视图中
+            
+            $this->assign('sub_id', $sub_id);
+            $this->assign('courselist', $list);    
+            $this->assign('primary_c', $course);
             return $this->fetch();
         } else {
             return view('login');
         }
     }
-    //展示课程
-    public function course() 
+    //更新课程内容
+    private function updateCourse()
     {
-        $list =$this->getCourseList(input('subject_id'));
-        $this->assign('courselist', $list);
-        return $this->fetch();
+        $course = CourseModel::get(input('course_id'));
+        $course->name = input('name');
+        $course->content = input('content');
+        if(false !== $course->save()) {
+            echo "更新成功";
+        } else {
+            return $course->geterror();
+        }
     }
-
-
-
+    //删除知识点
+    private function delCourse() 
+    {
+        $course = CourseModel::get(input('course_id'));
+        if($course) {
+            $course->delete();
+            echo "删除成功";
+        } else {
+            echo "删除失败";
+        }
+    }
 }

@@ -12,6 +12,8 @@
 return [
     '__pattern__' => [
         'name' => '\w+',
+        'sub_id' => '\d+',
+        'course_id' => '\d+',
     ],
     'register' => 'user/user/register',
     'login' => 'user/user/login',
@@ -19,8 +21,9 @@ return [
     'test' => 'user/user/test',
     'addsubject' => 'user/user/addSubject',
     'subject' => 'user/user/subject',
+    'updateSubject' => 'user/user/updateSubject',
     'delSubject' => 'user/user/delSubject',
     'addCourse' => 'user/user/addCourse',
-    'viewCourse' => 'user/user/viewCourse',
-    
+    'viewCourse/[:sub_id, :course_id]' => 'user/user/viewCourse',
+    'updateCourse' => 'user/user/updateCourse',
 ];
