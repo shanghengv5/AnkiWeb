@@ -21,7 +21,6 @@ class User extends Controller
                 return view('add_subject');
             }
             return view('subject', ['list'=>$list,]);            
-            
         } else {
             return view('login');
         }
@@ -83,7 +82,7 @@ class User extends Controller
         ->where('password', sha1($request->post('password')))->count() == 1) { 
             session('valid_user', input('username')); 
             $valid = session('valid_user');
-            echo 'hello'.$valid; 
+            echo '你好! '.$valid; 
             $list = $this->getSubjectList($valid);
             return view('subject', ['list'=>$list]);            
         } else {
