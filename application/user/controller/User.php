@@ -17,10 +17,9 @@ class User extends Controller
             $username = session('valid_user');
             $list = $this->getSubjectList($username);
             if(!$list) {
-                echo "你还没有创建科目,请先创建科目!";
                 return view('add_subject');
             }
-            return view('subject', ['list'=>$list,]);            
+            return view('subject', ['list'=>$list]);            
         } else {
             return view('login');
         }
@@ -46,12 +45,10 @@ class User extends Controller
         }
         //验证是否已经有了这个用户名.
         if($user->where('username', $request->post('username'))->count() != 0){
-            echo "该用户名已经注册!";
             return view('register');
         }
         //将合法内容保存到数据库,并且自动登录
         if($user->allowField(true)->save($arr)) {
-            echo '注册成功';
             return $this->fetch('subject');      
         } else {
             return $user->geterror();
@@ -82,11 +79,9 @@ class User extends Controller
         ->where('password', sha1($request->post('password')))->count() == 1) { 
             session('valid_user', input('username')); 
             $valid = session('valid_user');
-            echo '你好! '.$valid; 
             $list = $this->getSubjectList($valid);
             return view('subject', ['list'=>$list]);            
         } else {
-            echo '账号密码错误';
             return view('index');
         }
     }
@@ -95,19 +90,12 @@ class User extends Controller
     {
         //如果会话不存在有效用户,则需要登录才能登出
         if(!$this->isLogin()) {
-            echo "you already log out";
             return view('login');
         }
         //清空当前域的valid_user内容.并且跳转到登录界面.
         session('valid_user', null);
         return view('login');
     }
-
-    public function test(Request $request) 
-    {
-        return view();
-    }
-
     //通过用户名得到用户id
     private function getIdByUsername($username) 
     {
@@ -117,12 +105,11 @@ class User extends Controller
     //判断表中是否已经存在这条数据
     private function isExist($instance, $column ,$name) 
     {
-        
         $res = $instance->where($column, $name)->count();
-        if($res > 1) {
-            return true;
-        } else {
+        if($res == 0) {
             return false;
+        } else {
+            return true;
         }
     }
     //添加学习科目
@@ -138,6 +125,8 @@ class User extends Controller
             $subject = new SubjectModel;
             $subject->name = input('name');
             $subject->user_id = $this->getIdByUsername($username);
+            $subject->expire = 0;
+            $subject->new = 0;
             //判断科目名字是否被填入
             $res = $this->validate(input('post.'), 'Subject');
             if($res !== true) {
@@ -145,21 +134,17 @@ class User extends Controller
             }
             //判斷是否已經有這個科目名了
             if($this->isExist($subject ,'name', input('name'))) {
-                echo "已經有這個編程名了";
                 return view();
             }
             if($subject->allowField(true)->save()) {
-                echo "插入新科目[".input('name')."]";
                 $list = $this->getSubjectList($username);
-                return view('subject', ['list'=>$list]);
+                return view('subject', ['list'=>$list,]);
             } else {
-                echo '添加失败';
                 return view('index');
             }
             $list = $this->getSubjectList($username);
             return view('subject', ['list'=>$list]);
         } else {
-            echo "请先登录后,再进行操作";
             return view('login');
         }
     }
@@ -172,9 +157,8 @@ class User extends Controller
         if($sub) {
             $sub->name = input('name');
             $sub->save();
-            echo "更新成功";
         } else {
-            echo "更新失败";
+            return $sub->geterror();
         }
     }
     //展示已經有的科目
@@ -190,14 +174,13 @@ class User extends Controller
         if(($username = $this->isLogin())){
             $list = $this->getSubjectList($username);
             //通过user_id获取科目列表
-            if($list) {
+            if($list) {       
                 $this->assign('list', $list);
                 return $this->fetch();
             } else {
                 return view('add_subject');
             }   
         } else {
-            echo "请先登录";
             return view('login');
         }
     }
@@ -211,12 +194,11 @@ class User extends Controller
         //如果id存在,则删除
         if($sub) {
             $sub->delete();
-            echo "删除成功";
             if($course) {
                 $course->delete();
             }
         } else {
-            echo "错误,无法删除";
+            return $course->geterror();
         }
     }
     //通过用户名获取科目列表
@@ -247,18 +229,14 @@ class User extends Controller
                 if($cour->allowField(true)->save(input('post.'))) {
                     //如果有重复的知识点需要提醒,但不阻止
                     if($this->isExist($cour, 'name', input('name'))) {
-                        echo "这是一个重复的知识点";
                         return view();
                     }
-                    echo "插入一个新的course".input('name')."]";
                     return view();
                 } else {
-                    echo "插入失败";
                     return view();
                     }
                 }
             } else {
-                echo "请先登录";
                 return view('login');
             }         
     }
@@ -299,7 +277,6 @@ class User extends Controller
             $subjectlist = $this->getSubjectList($username);
             //如果没有科目,需要先创建科目
             if(!$subjectlist) {
-                echo "你还没有科目, 请先创建";
                 return view('add_subject');
             }
             //如果没有传入sub_id,则默认显示排名排名靠前的科目
@@ -310,7 +287,6 @@ class User extends Controller
             $this->assign('subjectlist', $subjectlist);
             //如果没有知识点,需要先创建知识点. 
             if(!$list) {
-                echo "没有知识点";
                 return view('add_course');
             } 
             //得到相应的course
@@ -333,10 +309,10 @@ class User extends Controller
     private function updateCourse()
     {
         $course = CourseModel::get(input('course_id'));
-        $course->name = input('name');
-        $course->content = input('content');
-        if(false !== $course->save()) {
-            echo "更新成功";
+        if($course) {
+            $course->name = input('name');
+            $course->content = input('content');
+            $course->save();
         } else {
             return $course->geterror();
         }
@@ -347,9 +323,13 @@ class User extends Controller
         $course = CourseModel::get(input('course_id'));
         if($course) {
             $course->delete();
-            echo "删除成功";
         } else {
-            echo "删除失败";
+            return $course->geterror();
         }
+    }
+    //学习知识点.
+    public function studyCourse() 
+    {
+        return "study";
     }
 }

@@ -1,3 +1,4 @@
+<!--这是头部-->
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,10 +12,10 @@
             <h2>欢迎来到铁匠铺</h2>
             <hr />
                 <ul class="nav nav-pills row">
-                <li class="nav-item col"><a class='nav-link active text-center' href="<:url('/index')>">开始学习</a></li>
-                <li class="nav-item col"><a class='nav-link active text-center' href="<:url('/index/addSubject')>">添加科目</a></li>
-                <li class="nav-item col"><a class="nav-link active text-center" href="<:url('/index/addCourse')>">添加知识点</a></li>
-                <li class="nav-item col"><a class="nav-link active text-center" href="<:url('/index/viewCourse')>">浏览知识点</a></li>
+                <li class="nav-item col"><a class='nav-link active text-center' href="<*:url('/index')*>">开始学习</a></li>
+                <li class="nav-item col"><a class='nav-link active text-center' href="<*:url('/index/addSubject')*>">添加科目</a></li>
+                <li class="nav-item col"><a class="nav-link active text-center" href="<*:url('/index/addCourse')*>">添加知识点</a></li>
+                <li class="nav-item col"><a class="nav-link active text-center" href="<*:url('/index/viewCourse')*>">浏览知识点</a></li>
                 <?php if(session('valid_user', '', 'user')){
                         echo "<li class='nav-item col'> <a class='nav-link active text-center' href='". url('/index/logout')."'>登出</a></li> ";
                 }

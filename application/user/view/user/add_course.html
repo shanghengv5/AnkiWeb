@@ -1,5 +1,5 @@
 {include file="/template/header" title="小铁匠|添加你的课程"}
-<form method="post" action="<:url('/index/addCourse')>">
+<form method="post" action="<*:url('/index/addCourse')*>">
     <div class="row">
     <div class="col"></div>
     <div class="col">
@@ -11,7 +11,7 @@
             <label for="subject_id">科目</label>
             <select name="subject_id" class="custom-select" id="subject_id">
                 {volist name="subjectlist" id="sub"}
-                <option value="<$sub.subject_id>"><$sub.name></option>
+                <option value="<$sub.subject_id>"><*$sub.name*></option>
                 {/volist}
             </select>
             
