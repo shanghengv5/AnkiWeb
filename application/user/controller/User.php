@@ -310,10 +310,10 @@ class User extends Controller
     private function delCourse() 
     {
         $course = CourseModel::get(input('course_id'));
+        $sub = SubjectModel::get($course['subject_id']);
+        $this->checkStatu($course, $sub, 'delete');
         if($course) {
             $course->delete();
-        } else {
-            return $course->geterror();
         }
     }
     //查询用户科目情况
@@ -353,7 +353,7 @@ class User extends Controller
         return $this->fetch();
     }
     //判断course的状态
-    private function checkStatu($cour, $sub) 
+    private function checkStatu($cour, $sub, $op='') 
     {   
         switch($cour['statu']) {
             //如果该课程的状态为new,则代表为新增课程
@@ -376,11 +376,29 @@ class User extends Controller
                     //更新课程状态为first_expire
                     $cour['statu'] = 'first_expire';
                     $cour->save();
-                }   
+                } else if($op == 'delete') {
+                    $sub->new -= 1;
+                    $sub->save();
+                }
+                break;  
+            }
+            //第一次到期,根据op判断是否到下一次等待,并且根据op判断增加时间
+            case('first_expire'): {
+                break;
             }
         }
     }
-
+    //根据op返回不同的数字
+    private function incTime($op) 
+    {
+        if($op == 'difficult') {
+            return false;
+        } else if($op == 'normal') {
+            return ;
+        } else if($op == 'easy') {
+            return 4*3600*24;
+        }
+    }
     //test
     public function test()
     {

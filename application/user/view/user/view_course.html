@@ -18,7 +18,7 @@
     {/volist}
     </div>
     <div class="col-6">
-        <form class="form-group" method="post" action="<:url('/index/viewCourse')>">
+        <form class="form-group" method="post" action="<*:url('/index/viewCourse')*>">
             <label for="name">知识点</label>
             <input class="form-control" type="text" value="<*$primary_c.name*>" id="name" name="name">
             <label for="content">答案</label>
@@ -28,7 +28,8 @@
             <div class="row">
                 <div class="col-4">
                 </div>
-                <input class="form-control btn btn-success col-2" type="submit" value="修改">                 
+                <input class="form-control btn btn-success col-2" type="submit" value="修改">    
+        </form>             
                 <div class="col">
                 {include file="/template/modal" 
                 title="是否删除这个知识点" content="你正打算删除这个知识点!!" method="post" 
@@ -39,7 +40,6 @@
             <div class="alert alert-success text-center">  
                     创建时间:<*$primary_c.create_time*>
             </div>
-        </form>
     </div>
 </div>
 
