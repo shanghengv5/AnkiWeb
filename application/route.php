@@ -23,5 +23,5 @@ return [
     'subject' => 'user/user/subject',
     'addCourse' => 'user/user/addCourse',
     'viewCourse/[:sub_id, :course_id]' => 'user/user/viewCourse',
-    
+    'studySubject/[:sub_id, :course_id]' => 'user/user/studySubject',
 ];

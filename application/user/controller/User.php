@@ -157,6 +157,7 @@ class User extends Controller
         }
         //得到subject表中的所有数据然后传入视图中.
         if(($username = $this->isLogin())){
+            $this->checkSubject($username);
             $list = $this->getSubjectList($username);
             //通过user_id获取科目列表
             if($list) {       
@@ -201,6 +202,9 @@ class User extends Controller
             if(($username=$this->isLogin())) {
             //将subjectlist传递给add_course页面
             $subjectlist = $this->getSubjectList($username);
+            if(!$subjectlist) {
+                return view('add_subject');
+            }
             $this->assign('subjectlist', $subjectlist);
             if(empty(input('post.'))) {
                 return $this->fetch();
@@ -312,9 +316,79 @@ class User extends Controller
             return $course->geterror();
         }
     }
-    //学习知识点.
-    private function changeExpireNew() 
+    //查询用户科目情况
+    private function checkSubject($username) 
     {
-        return "study";
+        $sub = $this->getSubjectList($username);
+        if($sub) {
+            //获取科目列表,并且检查其中course
+            foreach($sub as $subitem) {
+                $this->checkCourse($subitem['subject_id']);
+            }
+        }
+    }
+    //查询课程情况
+    private function checkCourse($id) {
+        $cour = $this->getCourseList($id);
+        if($cour) {
+            //获取这个科目的课程列表
+            foreach($cour as $couritem) {
+                //获取当前科目的数据以便更新
+                $sub = SubjectModel::get($couritem['subject_id']);
+                $this->checkStatu($couritem, $sub);
+            }
+        }
+    }
+    //开始学习,通过选项判断复习时间
+    public function studySubject() 
+    {
+        if($this->isLogin()){
+            if(input('subject_id')) {
+                $cour = $this->getCourseList(input('subject_id'));
+
+            }
+        } else {
+            return view('login');
+        }
+        return $this->fetch();
+    }
+    //判断course的状态
+    private function checkStatu($cour, $sub) 
+    {   
+        switch($cour['statu']) {
+            //如果该课程的状态为new,则代表为新增课程
+            case('new'): {
+                if($sub) {
+                    $sub->new += 1;
+                    $sub->save();
+                } 
+                $cour['statu'] = 'first_wait';
+                $cour->save();
+                break;
+            } 
+            //这是最初的等待状态,等待studysubject为expire_time赋值并且等待到期.
+            case('first_wait'): {
+                if(($cour['expire_time'] != null) && (strtotime($cour['expire_time'])<strtotime('time'))) {
+                    if($sub) {
+                        $sub->expire += 1;
+                        $sub->save();
+                    } 
+                    //更新课程状态为first_expire
+                    $cour['statu'] = 'first_expire';
+                    $cour->save();
+                }   
+            }
+        }
+    }
+
+    //test
+    public function test()
+    {
+        $cor = CourseModel::get(27);
+        if($cor->create_time < strtotime('now')) {
+            echo "确实";
+        }
+        dump(strtotime($cor->create_time));
+        dump(strtotime('now'));
     }
 }

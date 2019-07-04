@@ -10,7 +10,7 @@
     {volist name="list" id="subname"}
     <ul class="pagination row">
     <li class="list-group-item  text-center col-3">
-    <a class="text-center" href="#"><*$subname.name*></a>
+    <a class="text-center" href="<*:url('/index/studySubject').'?'.$subname.subject_id*>"><*$subname.name*></a>
     </li>
     <li class="list-group-item text-center col-3"><*$subname.expire*></li>
     <li class="list-group-item text-center col-3"><*$subname.new*></li>
@@ -25,8 +25,8 @@
         url="<*:url('/index/subject')*>" value="<*$subname.subject_id*>" name="subject_id" action="删除"
         target="删除<*$subname.subject_id*>" anchor="delete" btn="warning"}
         <!--学习按钮-->
-        <form method="GET" action="#">
-        <input type="hidden" value="<*$subname.subject_id*>">
+        <form method="GET" action="<*:url('/index/studySubject')*>">
+        <input type="hidden" name="subject_id" value="<*$subname.subject_id*>">
         <button class="btn btn-success" type="submit">开始学习</button>
         </form>
     </div>

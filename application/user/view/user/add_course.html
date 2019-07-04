@@ -4,6 +4,7 @@
     <div class="col"></div>
     <div class="col">
         <div class="form-group">
+            <input type="hidden" name="statu" value="new">
             <label for="name">知识点</label>
             <input type="text" class="form-control" id="name" name="name" placeholder="一个学习的知识点">
             <label for="content">答案</label>
@@ -11,7 +12,7 @@
             <label for="subject_id">科目</label>
             <select name="subject_id" class="custom-select" id="subject_id">
                 {volist name="subjectlist" id="sub"}
-                <option value="<$sub.subject_id>"><*$sub.name*></option>
+                <option value="<*$sub.subject_id*>"><*$sub.name*></option>
                 {/volist}
             </select>
             
