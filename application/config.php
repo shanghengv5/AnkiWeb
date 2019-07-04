@@ -59,7 +59,7 @@ return [
     // 默认控制器名
     'default_controller'     => 'user',
     // 默认操作名
-    'default_action'         => 'index',
+    'default_action'         => 'subject',
     // 默认验证器
     'default_validate'       => 'validate',
     // 默认的空控制器名

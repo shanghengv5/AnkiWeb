@@ -9,21 +9,6 @@ use app\user\model\Course as CourseModel;
 
 class User extends Controller
 {
-    //这是一个首页.
-    public function index(Request $request, $username='游客')
-    {
-        //如果登录了,将用户名赋值
-        if(session('?valid_user')) {
-            $username = session('valid_user');
-            $list = $this->getSubjectList($username);
-            if(!$list) {
-                return view('add_subject');
-            }
-            return view('subject', ['list'=>$list]);            
-        } else {
-            return view('login');
-        }
-    }
     //这是一个注册页面
     public function register(Request $request)
     {
@@ -328,7 +313,7 @@ class User extends Controller
         }
     }
     //学习知识点.
-    public function studyCourse() 
+    private function changeExpireNew() 
     {
         return "study";
     }
