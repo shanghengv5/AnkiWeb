@@ -343,12 +343,12 @@ class User extends Controller
     public function studySubject() 
     {
         if($this->isLogin()){
-            if(input('subject_id')) {
-                $cour = $this->getCourseList(input('subject_id'));
-                $sub = SubjectModel::get(input('subject_id'));
-                foreach($cour as $couritem) {
-
-                }
+            if(($sub_id = input('subject_id'))) {
+                $sub = SubjectModel::get($sub_id);
+                $cour = CourseModel::getByStatu('expire');
+                dump($cour);
+            } else {
+                echo "fail";
             }
         } else {
             return view('login');
@@ -377,7 +377,7 @@ class User extends Controller
                 $cur_time = strtotime('now'); 
                 //第一次学习
                 if($cour->rank == 0) {
-                    $cour->expire_time = date('Y-m-d H:i:s', $cur_time+$this->incTime($op));                
+                    $cour->expire_time = date('Y-m-d H:i:s', $cur_time + $this->incTime($op));                
                     $cour->statu = 'wait';
                     $cour->rank = 1;
                     $sub->new -= 1;
@@ -426,11 +426,7 @@ class User extends Controller
     //test
     public function test()
     {
-        $cor = CourseModel::get(27);
-        if($cor->create_time < strtotime('now')) {
-            echo "确实";
-        }
-        dump(strtotime($cor->create_time));
-        dump(strtotime('now'));
+        $cour = CourseModel::getByStatu('expire');
+        dump($cour);
     }
 }

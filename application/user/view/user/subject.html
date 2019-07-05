@@ -10,7 +10,7 @@
     {volist name="list" id="subname"}
     <ul class="pagination row">
     <li class="list-group-item  text-center col-3">
-    <a class="text-center" href="<*:url('/index/studySubject').'?'.$subname.subject_id*>"><*$subname.name*></a>
+    <a class="text-center" href="<*:url('/index/studySubject').'?subject_id='.$subname.subject_id*>"><*$subname.name*></a>
     </li>
     <li class="list-group-item text-center col-3"><*$subname.expire*></li>
     <li class="list-group-item text-center col-3"><*$subname.new*></li>
