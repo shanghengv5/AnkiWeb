@@ -328,7 +328,8 @@ class User extends Controller
         }
     }
     //查询课程情况
-    private function checkCourse($id) {
+    private function checkCourse($id)
+     {
         $cour = $this->getCourseList($id);
         if($cour) {
             //获取这个科目的课程列表
@@ -339,21 +340,42 @@ class User extends Controller
             }
         }
     }
+    //查找状态为expire的course
+    private function getExpireCourse($id)
+    {
+        $cour = CourseModel::getByStatu('expire');
+        if($cour && ($cour->subject_id == $id)) {
+            return $cour;
+        } else {
+            return false;
+        }
+        
+        
+    }
     //开始学习,通过选项判断复习时间
     public function studySubject() 
     {
-        if($this->isLogin()){
+        if(($username=$this->isLogin())){
             if(($sub_id = input('subject_id'))) {
                 $sub = SubjectModel::get($sub_id);
-                $cour = CourseModel::getByStatu('expire');
-                dump($cour);
+                if(input('op')) {
+                    $cour = CourseModel::get(input('course_id'));
+                    $this->checkStatu($cour, $sub, input('op'));
+                } 
+                if(($cour = $this->getExpireCourse($sub_id))) {
+                    $this->assign('cour', $cour);
+                    return $this->fetch();
+                } else {
+                    echo "你已经全部学习完!";
+                    $list = $this->getSubjectList($username);
+                    return view('add_course', ['subjectlist'=>$list, ]);
+                }
             } else {
-                echo "fail";
+                echo "错误,请传入id";
             }
         } else {
             return view('login');
         }
-        return $this->fetch();
     }
     //判断course的状态
     private function checkStatu($cour, $sub, $op='') 
@@ -426,7 +448,7 @@ class User extends Controller
     //test
     public function test()
     {
-        $cour = CourseModel::getByStatu('expire');
-        dump($cour);
+        $cour = $this->getExpireCourse(33);
+        dump($cou);
     }
 }

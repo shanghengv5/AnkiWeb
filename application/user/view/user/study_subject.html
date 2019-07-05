@@ -1,13 +1,20 @@
 {include file="/template/header" title="登录界面"}
 <div class="row">
     <div class="col-4"></div>
-    <button class="btn btn-info col-4" data-toggle="collapse" data-target="#1">
-    知识点
-    </button> 
+    <button class="btn btn-info col-4" data-toggle="collapse" data-target="#1"><*$cour.name*></button> 
     <div class="col-4"></div>
-    <div id="1" class="collapse">
-        这样没问题了
-    </div>
-    
+</div>
+
+<div id="1" class="collapse">
+        <p class="text-center"><*$cour.content*></p>
+        <form method="GET" action="<*:url('/index/studySubject')*>">
+        <div class="btn-group">
+            <input type="hidden" name="course_id" value="<*$cour.course_id*>">
+            <input type="hidden" name="subject_id" value="<*$cour.subject_id*>">
+            <button class="btn btn-warning" type="submit "name="op" value="diffcult">困难</button>
+            <button class="btn btn-secondary" type="submit "name="op" value="normal">一般</button>
+            <button class="btn btn-primary" type="submit "name="op" value="easy">简单</button>
+        </div>
+        </form>
 </div>
 {include file="/template/footer"}
