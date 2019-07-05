@@ -345,6 +345,10 @@ class User extends Controller
         if($this->isLogin()){
             if(input('subject_id')) {
                 $cour = $this->getCourseList(input('subject_id'));
+                $sub = SubjectModel::get(input('subject_id'));
+                foreach($cour as $couritem) {
+
+                }
             }
         } else {
             return view('login');
@@ -354,81 +358,54 @@ class User extends Controller
     //判断course的状态
     private function checkStatu($cour, $sub, $op='') 
     {   
-        switch($cour['statu']) {
+        switch($cour->statu) {
             //如果该课程的状态为new,则代表为新增课程
             case('new'): {
                 if($sub) {
                     $sub->new += 1;
                     $sub->save();
                 } 
-                $cour['statu'] = 'first_wait';
+                $cour->statu = 'expire';
+                $cour->rank = 0;
                 $cour->save();
                 break;
-            } 
-            //这是最初的等待状态,等待studysubject为expire_time赋值并且等待到期.
-            case('first_wait'): {
-                if(($cour['expire_time'] != null) && (strtotime($cour['expire_time'])<strtotime('now'))) {
+            }
+            //作为一个中间状态等待
+            case('expire'): {
+                //如果没有需要操作,直接退出!
+                if(!$op) {break;}
+                $cur_time = strtotime('now'); 
+                //第一次学习
+                if($cour->rank == 0) {
+                    $cour->expire_time = date('Y-m-d H:i:s', $cur_time+$this->incTime($op));                
+                    $cour->statu = 'wait';
+                    $cour->rank = 1;
+                    $sub->new -= 1;
+                //后面的学习
+                } else {
+                    //期待时间是现在时间加上等级+1之和乘以学习程度对应的时间!
+                    $cour->expire_time = date('Y-m-d H:i:s', $cur_time + ($cour->rank+1) * $this->incTime($op));                
+                    $cour->statu = 'wait';
+                    $sub->expire -= 1;
+                    if($op == 'easy') {
+                        $cour->rank += 1;
+                    } 
+                }
+                $sub->save();
+                $cour->save(); 
+                break;
+            }
+            //等待状态,当
+            case('wait'): {
+                if(strtotime($cour->expire_time)<strtotime('now')) {
                     //expire数量增加1
                     $sub->expire += 1;
-                    $sub->new -= 1;
                     $sub->save();
                     //更新课程状态为first_expire
-                    $cour->statu = 'first_expire';
+                    $cour->statu = 'expire';
                     $cour->save();
-                } else if(strtotime($cour['expire_time'])<strtotime('now')) {
-                    $sub->expire += 1;
-                    $sub->save();
-                    //更新课程状态为first_expire
-                    $cour->statu = 'first_expire';
-                    $cour->save();
-                } else if($op == 'delete') {
-                    $sub->new -= 1;
-                    $sub->save();
-                }
+                } 
                 break;  
-            }
-            case('second_wait'): {
-                if(strtotime($cour['expire_time'])<strtotime('now')) {
-                    //expire数量增加1
-                    $sub->expire += 1;
-                    $sub->save();
-                    //更新课程状态为first_expire
-                    $cour->statu = 'second_expire';
-                    $cour->save();
-                }
-                break;
-            }
-            //第一次到期,根据op判断是否到下一次等待,并且根据op判断增加时间
-            case('first_expire'): {
-                $cur_time = strtotime('now');                   
-                $cour->expire_time = date('Y-m-d H:i:s', $cur_time+$this->incTime($op));
-                //如果操作为easy进入下一次学习等待,如果为delete,减少到期数量.
-                if($op == 'easy' || $op == 'delete') {
-                    $cour->statu = 'second_wait';
-                    //进度返回上次等待
-                } else {
-                    $cour->statu = 'first_wait';
-                }
-                $sub->expire -= 1;
-                $sub->save();
-                $cour->save(); 
-                break;
-            }
-            //第二次到期
-            case('second_expire'): {
-                $cur_time = strtotime('now');                   
-                $cour->expire_time = date('Y-m-d H:i:s', $cur_time+2*$this->incTime($op));
-                //如果操作为easy进入下一次学习等待,如果为delete,减少到期数量.
-                if($op == 'easy' || $op == 'delete') {
-                    $cour->statu = 'third_wait';
-                    //进度返回上一次等待
-                } else {
-                    $cour->statu = 'second_wait';
-                }
-                $sub->expire -= 1;
-                $sub->save();
-                $cour->save(); 
-                break;
             }
         }
     }
