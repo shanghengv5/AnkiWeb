@@ -9,8 +9,6 @@ use app\user\model\Course as CourseModel;
 use app\user\functions\Course as CourseFns;
 use app\user\functions\Subject as SubjectFns;
 use app\user\functions\Data as DataFns;
-
-
 class User extends Controller
 {
     //这是一个注册页面
@@ -41,7 +39,7 @@ class User extends Controller
             if($user->allowField(true)->save($arr)) {
                 return $this->fetch('subject');      
             } else {
-                return $user->geterror();
+                return $user->getError();
             }
         }
         
@@ -262,6 +260,10 @@ class User extends Controller
     //test
     public function test()
     {
-        return view();
+        $t_array = explode(' ', 'wo  wo shi shi da shuai ge');      
+        $d_array = explode(' ', 'ni hao ruguo wo geng jia chang ne');
+        $res = array_merge($t_array, $d_array);       
+        dump($res);
+        return view('test');
     }
 }

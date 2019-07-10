@@ -51,7 +51,7 @@ class Course
             $course->content = input('content');
             $course->save();
         } else {
-            return $course->geterror();
+            return $course->getError();
         }
     }
     //得到course的list

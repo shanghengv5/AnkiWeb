@@ -21,7 +21,7 @@ class Subject
                 $course->delete();
             }
         } else {
-            return $course->geterror();
+            return $course->getError();
         }
     }
     //通过用户名获取科目列表
@@ -42,7 +42,7 @@ class Subject
             $sub->name = input('name');
             $sub->save();
         } else {
-            return $sub->geterror();
+            return $sub->getError();
         }
     }
     //判断course的状态
