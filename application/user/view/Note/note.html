@@ -1,0 +1,14 @@
+{include file="/template/header" title="登录界面"}
+<nav class="navbar bg-light">
+<ul class="navbar-nav">
+    {volist name="subjectlist" id="sub"}
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+             <*$sub.name*>
+        </a>
+    </li>
+    {/volist}
+</ul>
+
+</nav>
+{include file="/template/footer"}

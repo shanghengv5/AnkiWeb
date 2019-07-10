@@ -20,9 +20,11 @@ return [
     'login' => 'user/user/login',
     'logout' => 'user/user/logout',
     'test' => 'user/user/test',
-    'addsubject' => 'user/user/addSubject',
-    'subject' => 'user/user/subject',
-    'addCourse' => 'user/user/addCourse',
-    'viewCourse/[:sub_id, :course_id]' => 'user/user/viewCourse',
-    'studySubject/[:sub_id, :course_id, :op]' => 'user/user/studySubject',
+    'addsubject' => 'user/study/addSubject',
+    'subject' => 'user/study/subject',
+    'addCourse' => 'user/study/addCourse',
+    'viewCourse/[:sub_id, :course_id]' => 'user/study/viewCourse',
+    'studySubject/[:sub_id, :course_id, :op]' => 'user/study/studySubject',
+    'note/[:sub_id]' => 'user/note/note',
+    
 ];
