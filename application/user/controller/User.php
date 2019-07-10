@@ -263,7 +263,7 @@ class User extends Controller
         $t_array = explode(' ', 'wo  wo shi shi da shuai ge');      
         $d_array = explode(' ', 'ni hao ruguo wo geng jia chang ne');
         $res = array_merge($t_array, $d_array);       
-        dump($res);
+        
         return view('test');
     }
 }
