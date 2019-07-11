@@ -11,13 +11,15 @@ class Note extends Controller
     {
         $subfns = new SubjectFns;
         if(($username=DataFns::isLogin())) {
-           
+            // 如果传入参数
             if($sub_id) {
+                // 获取sub_id参数,展示知识点列表
                 $courfns = new CourseFns;
                 $list = $courfns->getCourseList($sub_id);
                 $this->assign('courselist', $list);
                 return $this->fetch('view_note');
             }
+            // 当没有传入参数时,显示科目列表.
             $subjectlist = $subfns->getSubjectList($username);
             if($subjectlist) {
                 $this->assign('subjectlist', $subjectlist);
