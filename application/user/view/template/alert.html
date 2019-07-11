@@ -1,4 +1,10 @@
-<div class="alert alert-[type] alert-dimissible">
-    <button type="button" class="close" data-dimiss="alert">&times;</button>
-    <strong>[alert]</strong>
+<script>
+        $(document).ready(function(){
+            $("#alert").[action]();
+        });
+</script>
+
+<div id="alert" class="alert alert-[type] alert-dismissible fade show">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>[msg]</strong>
 </div>

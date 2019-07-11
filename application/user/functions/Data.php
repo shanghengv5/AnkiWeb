@@ -15,13 +15,13 @@ class Data
         }
     }
     //判断表中是否已经存在这条数据
-    public static function isExist($instance, $column ,$name) 
+    public static function isExist($instance, $column ,$name, $id, $idname) 
     {
-        $res = $instance->where($column, $name)->count();
-        if($res == 0) {
-            return false;
-        } else {
+        $res = $instance->where($id, $idname)->where($column, $name)->count();
+        if($res >= 1) {
             return true;
+        } else {
+            return false;
         }
     }
     //通过用户名得到用户id

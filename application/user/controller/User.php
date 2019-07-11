@@ -2,9 +2,11 @@
 namespace app\user\controller;
 use think\Controller;
 use app\user\model\User as UserModel;
+use app\user\model\Course as CourseModel;
 use think\Request;
 use app\user\functions\Subject as SubjectFns;
 use app\user\functions\Data as DataFns;
+
 class User extends Controller
 {
     //这是一个注册页面
@@ -90,10 +92,9 @@ class User extends Controller
     //test
     public function test()
     {
-        $t_array = explode(' ', 'wo  wo shi shi da shuai ge');      
-        $d_array = explode(' ', 'ni hao ruguo wo geng jia chang ne');
-        $res = array_merge($t_array, $d_array);       
-        
+        $cour = new CourseModel;
+        $res = DataFns::isExist($cour, 'name', '编程');
+        dump($res);
         return view('test');
     }
 }

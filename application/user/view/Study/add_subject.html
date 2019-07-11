@@ -1,5 +1,7 @@
 {include file="/template/header" title="小铁匠|添加科目" username="<*$username*>" /}
-<form method="POST" action="<*:url('/index/addsubject')*>"
+
+{include file="/template/alert" type="<*$type*>" msg="<*$msg*>" action="<*$action*>"}
+<form method="POST" action="<*:url('/index/addSubject')*>"
 <div class="row">
     <div class="col"></div>
     <div class="col">

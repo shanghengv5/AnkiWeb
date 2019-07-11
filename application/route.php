@@ -21,7 +21,7 @@ return [
     'login' => 'user/user/login',
     'logout' => 'user/user/logout',
     'test' => 'user/user/test',
-    'addsubject' => 'user/study/addSubject',
+    'addSubject' => 'user/study/addSubject',
     'subject' => 'user/study/subject',
     'addCourse' => 'user/study/addCourse',
     'viewCourse/[:sub_id, :course_id]' => 'user/study/viewCourse',
