@@ -8,6 +8,12 @@ use app\user\functions\Subject as SubjectFns;
 use app\user\functions\Data as DataFns;
 class Study extends Controller
 {
+    //首页,介绍小铁匠的功能
+    public function index()
+    {
+        return view();
+    }
+
     //添加学习科目
     public function addSubject() 
     {
@@ -70,10 +76,7 @@ class Study extends Controller
                 $this->assign('list', $list);
                 return $this->fetch();
             } else {
-                $msg = "你还未有科目!";
-                $type = "warning";
-                $action = "append";
-                return view('add_subject', ['type'=>$type, 'msg'=>$msg, 'action'=>$action]);
+                return view('index');
             }   
         } else {
             return view('user/login');

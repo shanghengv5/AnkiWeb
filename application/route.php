@@ -23,6 +23,7 @@ return [
     'test' => 'user/user/test',
     'addSubject' => 'user/study/addSubject',
     'subject' => 'user/study/subject',
+    'index' => 'user/study/index',
     'addCourse' => 'user/study/addCourse',
     'viewCourse/[:sub_id, :course_id]' => 'user/study/viewCourse',
     'studySubject/[:sub_id, :course_id, :op]' => 'user/study/studySubject',
