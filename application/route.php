@@ -15,6 +15,7 @@ return [
         'sub_id' => '\d+',
         'course_id' => '\d+',
         'op' => '\w+',
+        'id' => '\d+',
     ],
     'register' => 'user/user/register',
     'login' => 'user/user/login',
@@ -25,6 +26,6 @@ return [
     'addCourse' => 'user/study/addCourse',
     'viewCourse/[:sub_id, :course_id]' => 'user/study/viewCourse',
     'studySubject/[:sub_id, :course_id, :op]' => 'user/study/studySubject',
-    'note/[:sub_id]' => 'user/note/note',
+    'noted/[:sub_id]' => 'user/note/noted',
     
 ];

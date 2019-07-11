@@ -1,3 +1,18 @@
 {include file="/template/header" title="登录界面"}
 
+{volist name="courselist" id="cour"}
+<script>
+        $(document).ready(function(){
+          $("#name<*$cour.course_id*>").click(function(){
+            $("#content<*$cour.course_id*>").toggle();
+          });
+        });
+        </script>
+{/volist}
+{volist name="courselist" id="cour"}
+<h4 class="text-muted" id="name<*$cour.course_id*>"><*$cour.name*></h4>
+<hr />
+<blockquote class="text-info" id="content<*$cour.course_id*>"><*$cour.content*></blockquote>
+<hr />
+{/volist}
 {include file="/template/footer"}

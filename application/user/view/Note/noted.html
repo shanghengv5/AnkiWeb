@@ -1,0 +1,11 @@
+{include file="/template/header" title="笔记"}
+<nav class="navbar bg-light">
+<ul class="navbar-nav">
+        {volist name="subjectlist" id="sub"}
+        <li class="nav-item">
+            <a class="nav-link" href="<*:url('/index/noted/').$sub.subject_id*>"><*$sub.name*></a>
+        </li>
+        {/volist} 
+</ul>
+</nav>
+{include file="/template/footer"}

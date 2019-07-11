@@ -1,9 +1,7 @@
 <?php
 namespace app\user\controller;
 use think\Controller;
-use app\user\model\User as UserModel;
 use app\user\model\Subject as SubjectModel;
-use think\Request;
 use app\user\model\Course as CourseModel;
 use app\user\functions\Course as CourseFns;
 use app\user\functions\Subject as SubjectFns;
@@ -11,7 +9,7 @@ use app\user\functions\Data as DataFns;
 class Study extends Controller
 {
     //添加学习科目
-    public function addSubject(Request $request) 
+    public function addSubject() 
     {
         $subfns = new SubjectFns;
         //如果没有提交表单内容,显示表单.
@@ -143,7 +141,6 @@ class Study extends Controller
                 $course = $list[0];
             }
             //传递变量到视图中
-            
             $this->assign('sub_id', $sub_id);
             $this->assign('courselist', $list);    
             $this->assign('primary_c', $course);
