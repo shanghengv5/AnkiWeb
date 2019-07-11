@@ -17,11 +17,11 @@
     </ul>
     <div class="btn-group">
         <!--重命名模态框-->   
-        {include file="/template/modal"  title="是否重命名该科目" content="<h4>科目名:</h4> <input type='text' name='name'>" method="post" 
+        {include file="/template/modal"  title="是否重命名该科目" content="<h4>科目名:</h4> <input type='text' name='name' value='<*$subname.name*>'>" method="post" 
         url="<*:url('/index/Subject')*>" value="<*$subname.subject_id*>" name="subject_id" action="重命名"
         target="重命名<*$subname.subject_id*>" anchor="rename" btn="primary"}  
         <!--删除模态框-->
-        {include file="/template/modal"  title="是否删除该科目" content="你正在删除一个科目" method="post" 
+        {include file="/template/modal"  title="是否删除该科目" content="你是否要删除<strong><*$subname.name*></strong>科目" method="post" 
         url="<*:url('/index/subject')*>" value="<*$subname.subject_id*>" name="subject_id" action="删除"
         target="删除<*$subname.subject_id*>" anchor="delete" btn="warning"}
         <!--学习按钮-->

@@ -54,15 +54,15 @@ class Study extends Controller
     //展示已經有的科目
     public function subject()
     {
-        $subfns = new SubjectFns;
-        if('delete' == input('anchor')) {
-            $subfns->delSubject();
-        }
-        if('rename' == input('anchor')) {
-            $subfns->updateSubject();
-        }
         //得到subject表中的所有数据然后传入视图中.
         if(($username = DataFns::isLogin())){
+            $subfns = new SubjectFns;
+            if('delete' == input('anchor')) {
+                $subfns->delSubject();
+            }
+            if('rename' == input('anchor')) {
+                $subfns->updateSubject($username);
+            }
             $subfns->checkSubject($username);
             $list = $subfns->getSubjectList($username);
             //通过user_id获取科目列表

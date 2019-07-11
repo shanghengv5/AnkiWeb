@@ -33,17 +33,22 @@ class Subject
         return $list;
     }
     //更新科目
-    public function updateSubject()
+    public function updateSubject($username)
     {
         //从表单得到id并且传入模型
         $id = input('subject_id');
         $sub = SubjectModel::get($id);
-        if($sub) {
-            $sub->name = input('name');
-            $sub->save();
+        if(!DataFns::isExist($sub, 'name', input('name'), 'user_id', DataFns::getIdByUsername($username))) {
+            if($sub) {
+                $sub->name = input('name');
+                $sub->save();
+            } else {
+                return $sub->getError();
+            }
         } else {
-            return $sub->getError();
+            echo "重命名不应该重复!";   
         }
+        
     }
     //判断course的状态
     public function checkStatu($cour, $sub, $op='') 
