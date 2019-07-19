@@ -24,6 +24,7 @@ $query_course = "create table xtie_course (
                  subject_id int unsigned null,
                  create_time varchar(30) null,
                  update_time varchar(30) null,
+                 rank int unsigned null,
                  expire_time varchar(30) null,
                  foreign key(subject_id) references xtie_subject(subject_id))
                  engine=innodb";
