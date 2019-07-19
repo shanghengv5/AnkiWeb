@@ -1,5 +1,5 @@
 {include file="template/header" title="This is x-Tie" /}
-<form role="form" method="POST" action="<*:url('/index/register')*>">
+<form role="form" method="POST" action="<*:url('/register')*>">
     <div class="form-group ">
         <label for="username">名称</label>
         <input type="text" class="form-control " id="username" name="username" placeholder="请输入用户名">
@@ -8,7 +8,7 @@
         <label for="email">邮箱</label>
         <input type="text" class="form-control" id="email" name="email" placeholder="请输入邮箱">
         <input type="submit" class="form-control" value="注册">
-        <a class="form-control" href="<*:url('/index/login')*>">登录</a>
+        <a class="form-control" href="<*:url('/login')*>">登录</a>
     </div>
 </form>
 {include file="template/footer" /}
