@@ -4,7 +4,7 @@
     <ul class="navbar-nav">
     {volist name="subjectlist" id="sub"}
         <li class="nav-item">
-            <a class="nav-link active"  href="<*:url('/index/viewCourse').'?sub_id='.$sub.subject_id*>"> <*$sub.name*> </a>
+            <a class="nav-link active"  href="<*:url('/viewCourse').'?sub_id='.$sub.subject_id*>"> <*$sub.name*> </a>
         </li> 
     {/volist}      
     </ul>
@@ -13,12 +13,12 @@
     <div class="list-group col-4">
     {volist name="courselist" id="course"}
         <li class="list-group-item">
-            <a class="nav-link" href="<*:url('/index/viewCourse').'?course_id='.$course.course_id.'&sub_id='.$sub_id*>"><*$course.name*></a>     
+            <a class="nav-link" href="<*:url('/viewCourse').'?course_id='.$course.course_id.'&sub_id='.$sub_id*>"><*$course.name*></a>     
         </li>
     {/volist}
     </div>
     <div class="col-6">
-        <form class="form-group" method="post" action="<*:url('/index/viewCourse')*>">
+        <form class="form-group" method="post" action="<*:url('/viewCourse')*>">
             <label for="name">知识点</label>
             <input class="form-control" type="text" value="<*$primary_c.name*>" id="name" name="name">
             <label for="content">答案</label>
@@ -33,7 +33,7 @@
                 <div class="col">
                 {include file="/template/modal" 
                 title="是否删除这个知识点" content="你正打算删除这个知识点!!" method="post" 
-                url="<*:url('/index/viewCourse')*>" anchor="delete" value="<*$primary_c.course_id*>" name="course_id" 
+                url="<*:url('/viewCourse')*>" anchor="delete" value="<*$primary_c.course_id*>" name="course_id" 
                 target="<*$primary_c.course_id*>" action="删除" }
                 </div>
             </div>
