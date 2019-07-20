@@ -23,7 +23,7 @@ class Study extends Controller
             $msg = "";
             $type = "warning";
             $action = "remove";
-            return view('add_subject', ['type'=>$type, 'msg'=>$msg, 'action'=>$action]);
+            return view('Study/add_subject', ['type'=>$type, 'msg'=>$msg, 'action'=>$action]);
         } 
         //判断是否已经登录
         if(($username=DataFns::isLogin())) {
@@ -43,7 +43,7 @@ class Study extends Controller
                 $msg = "你已经有了这个科目名!";
                 $type = "warning";
                 $action = "append";
-                return view('add_subject', ['type'=>$type, 'msg'=>$msg, 'action'=>$action]);
+                return view('Study/add_subject', ['type'=>$type, 'msg'=>$msg, 'action'=>$action]);
             }
             if($subject->allowField(true)->save()) {
                 $list = $subfns->getSubjectList($username);
