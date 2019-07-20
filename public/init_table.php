@@ -1,6 +1,6 @@
 <?php
 
-$conn = new mysqli("127.0.0.1", 'root', '0813', 'xtie');
+$conn = new mysqli("localhost", 'root', '', 'xtie');
 if($conn->connect_errno) {
     printf("Connect failed: %s\n", $conn->connect_error);
     exit();
@@ -14,7 +14,7 @@ $query_subject = "create table xtie_subject (
           new int unsigned not null,
           create_time varchar(30) null,
           update_time varchar(30) null,
-          foreign key(user_id) references xtie_user(user_id))
+          foreign key(user_id) references xtie_user(user_id) on update cascade on delete cascade)
           engine=innodb";
 $query_course = "create table xtie_course (
                  course_id int unsigned  auto_increment primary key,
@@ -26,7 +26,7 @@ $query_course = "create table xtie_course (
                  update_time varchar(30) null,
                  rank int unsigned null,
                  expire_time varchar(30) null,
-                 foreign key(subject_id) references xtie_subject(subject_id))
+                 foreign key(subject_id) references xtie_subject(subject_id) on update cascade on delete cascade) 
                  engine=innodb";
 
 $query_user = "create table xtie_user (
@@ -44,8 +44,7 @@ function create($conn, $query) {
         echo "成功创建";
     }
 }
-$query = "create table heihei(
-          user char(10) null)";
-
+$query = "create database xtie character set utf-8";
+create($conn ,$query_subject);
 create($conn ,$query_course);
 

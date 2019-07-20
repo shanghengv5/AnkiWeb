@@ -19,9 +19,9 @@ class Data
     {
         $res = $instance->where($id, $idname)->where($column, $name)->count();
         if($res >= 1) {
-            return true;
+            return $res;
         } else {
-            return false;
+            return $res;
         }
     }
     //通过用户名得到用户id

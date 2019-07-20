@@ -16,10 +16,10 @@ class Subject
         $course = CourseModel::getBySubjectId($id);
         //如果id存在,则删除
         if($sub) {
-            $sub->delete();
             if($course) {
                 $course->delete();
             }
+            $sub->delete();
         } else {
             return $course->getError();
         }

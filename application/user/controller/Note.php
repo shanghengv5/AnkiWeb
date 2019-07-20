@@ -28,10 +28,10 @@ class Note extends Controller
                 $msg = "你还未有科目!";
                 $type = "warning";
                 $action = "append";
-                return view('study/add_subject', ['type'=>$type, 'msg'=>$msg, 'action'=>$action]);
+                return view('Study/add_subject', ['type'=>$type, 'msg'=>$msg, 'action'=>$action]);
             }
         } else {
-            return view('user/login');
+            return view('User/login');
         }
     }
 }

@@ -39,7 +39,7 @@ class User extends Controller
                 session('valid_user', $request->post('username'));
                 $list = $subfns->getSubjectList($request->post('username'));
                 $this->assign('list', $list);
-                return $this->fetch('study/subject');      
+                return $this->fetch('Study/subject');      
             } else {
                 return $user->getError();
             }
@@ -54,7 +54,7 @@ class User extends Controller
         //判断是否已经登录,如果登录,跳转到首页
         if(($username=DataFns::isLogin())) {
             $list = $subfns->getSubjectList($username);
-            return view('subject', ['list'=>$list]);            
+            return view('Study/subject', ['list'=>$list]);            
         }
         //判断是否有表单内容提交,如果没有,跳转到登录表单.
         if(empty($request->post())) {
@@ -72,7 +72,7 @@ class User extends Controller
         ->where('password', sha1($request->post('password')))->count() == 1) { 
             session('valid_user', input('username')); 
             $list = $subfns->getSubjectList(input('username'));
-            return view('study/subject', ['list'=>$list]);            
+            return view('Study/subject', ['list'=>$list]);            
         } else {
             return view('login');
         }

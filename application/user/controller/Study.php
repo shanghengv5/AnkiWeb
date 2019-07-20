@@ -39,7 +39,7 @@ class Study extends Controller
                 return $res;
             }
             //判斷是否已經有這個科目名了
-            if(DataFns::isExist($subject ,'name', input('name'), 'user_id', DataFns::getIdByUsername($username))) {
+            if(DataFns::isExist($subject ,'name', input('name'), 'user_id', DataFns::getIdByUsername($username))>0) {
                 $msg = "你已经有了这个科目名!";
                 $type = "warning";
                 $action = "append";
@@ -47,14 +47,14 @@ class Study extends Controller
             }
             if($subject->allowField(true)->save()) {
                 $list = $subfns->getSubjectList($username);
-                return view('subject', ['list'=>$list,]);
+                return view('Study/subject', ['list'=>$list,]);
             } else {
                 return view('index');
             }
             $list = $subfns->getSubjectList($username);
-            return view('subject', ['list'=>$list]);
+            return view('Study/subject', ['list'=>$list]);
         } else {
-            return view('user/login');
+            return view('User/login');
         }
     }
     //展示已經有的科目
@@ -74,12 +74,12 @@ class Study extends Controller
             //通过user_id获取科目列表
             if($list) {       
                 $this->assign('list', $list);
-                return $this->fetch();
+                return $this->fetch("Study/subject");
             } else {
-                return view('index');
+                return view('Study/index');
             }   
         } else {
-            return view('user/login');
+            return view('User/login');
         }
     }
     //增加课程
@@ -94,7 +94,7 @@ class Study extends Controller
             $msg = "你还未有科目!";
             $type = "warning";
             $action = "append";
-            return view('add_subject', ['type'=>$type, 'msg'=>$msg, 'action'=>$action]);
+            return view('Study/add_subject', ['type'=>$type, 'msg'=>$msg, 'action'=>$action]);
             
         }
         $this->assign('subjectlist', $list);
@@ -102,7 +102,7 @@ class Study extends Controller
             $msg = "";
             $type = "warning";
             $action = "remove";
-            return view('add_course', ['type'=>$type, 'msg'=>$msg, 'action'=>$action]);
+            return view('Study/add_course', ['type'=>$type, 'msg'=>$msg, 'action'=>$action]);
         } else {
             //表单不为空,将name,content,suebject_id传入数据库
             $res = $this->validate(input('post.'), 'Course');
@@ -112,21 +112,21 @@ class Study extends Controller
             $cour = new CourseModel;
             if($cour->allowField(true)->save(input('post.'))) {
                 //如果有重复的知识点需要提醒,但不阻止
-                if(DataFns::isExist($cour, 'name', input('name'), 'subject_id', input('subject_id'))) {
+                if(DataFns::isExist($cour, 'name', input('name'), 'subject_id', input('subject_id'))>1) {
                     $msg = "有重复的知识点!";
                     $type = "warning";
                     $action = "append";
-                    return view('add_course', ['subjectlist'=>$list, 'type'=>$type, 'msg'=>$msg, 'action'=>$action]);
+                    return view('Study/add_course', ['subjectlist'=>$list, 'type'=>$type, 'msg'=>$msg, 'action'=>$action]);
                 }
                 $msg = "成功添加";
                 $type = "success";
                 $action = "append";
-                return view('add_course', ['type'=>$type, 'msg'=>$msg, 'action'=>$action]);
+                return view('Study/add_course', ['type'=>$type, 'msg'=>$msg, 'action'=>$action]);
             } else {
                 $msg = "无法添加";
                 $type = "warning";
                 $action = "append";
-                return view('add_course', ['type'=>$type, 'msg'=>$msg, 'action'=>$action]);
+                return view('Study/add_course', ['type'=>$type, 'msg'=>$msg, 'action'=>$action]);
                 }
             }
         } else {
@@ -153,7 +153,7 @@ class Study extends Controller
                 $msg = "你还未有科目!";
                 $type = "warning";
                 $action = "append";
-                return view('add_subject', ['type'=>$type, 'msg'=>$msg, 'action'=>$action]);
+                return view('Study/add_subject', ['type'=>$type, 'msg'=>$msg, 'action'=>$action]);
             }
             //如果没有传入sub_id,则默认显示排名排名靠前的科目
             if(!input('sub_id')) {
@@ -166,7 +166,7 @@ class Study extends Controller
                 $msg = "你还未有知识点!";
                 $type = "warning";
                 $action = "append";
-                return view('add_course', ['type'=>$type, 'msg'=>$msg, 'action'=>$action]);
+                return view('Study/add_course', ['type'=>$type, 'msg'=>$msg, 'action'=>$action]);
             } 
             //得到相应的course
             $course = $courfns->getCourse($course_id);
@@ -180,7 +180,7 @@ class Study extends Controller
             $this->assign('primary_c', $course);
             return $this->fetch();
         } else {
-            return view('user/login');
+            return view('User/login');
         }
     }
     //开始学习,通过选项判断复习时间
@@ -203,13 +203,13 @@ class Study extends Controller
                     $type = "warning";
                     $action = "append";
                     $list = $subfns->getSubjectList($username);
-                    return view('add_course', ['subjectlist'=>$list, 'type'=>$type, 'msg'=>$msg, 'action'=>$action]);
+                    return view('Study/add_course', ['subjectlist'=>$list, 'type'=>$type, 'msg'=>$msg, 'action'=>$action]);
                 }
             } else {
                 echo "错误,请传入id";
             }
         } else {
-            return view('user/login');
+            return view('User/login');
         }
     }
 }
