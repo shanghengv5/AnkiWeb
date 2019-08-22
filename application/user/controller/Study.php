@@ -130,7 +130,7 @@ class Study extends Controller
                 }
             }
         } else {
-            return view('user/login');
+            return view('User/login');
         }         
     }
     //浏览知识点,需要显示科目与知识点的关系
